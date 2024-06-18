@@ -2,12 +2,15 @@
 using AK.DataAccess.Repository.IRepository;
 using AK.Models;
 using AK.Models.ViewModels;
+using AK.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AKEcom.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Authorize(Roles =SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitofwork;

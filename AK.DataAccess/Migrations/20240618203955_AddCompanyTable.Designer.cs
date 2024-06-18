@@ -4,6 +4,7 @@ using AK.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AK.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240618203955_AddCompanyTable")]
+    partial class AddCompanyTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,38 +96,6 @@ namespace AK.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "Tech City",
-                            Name = "Tech Solutions",
-                            PhoneNumber = "91221842179",
-                            PostalCode = "12121",
-                            State = "IL",
-                            StreetAddress = "123 Tech St"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Vivid City",
-                            Name = "Vivid Books",
-                            PhoneNumber = "394273847",
-                            PostalCode = "6666",
-                            State = "IL",
-                            StreetAddress = "123 vivid St"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Readers City",
-                            Name = "Readers Club",
-                            PhoneNumber = "4234234",
-                            PostalCode = "3444",
-                            State = "IL",
-                            StreetAddress = "123 Main St"
-                        });
                 });
 
             modelBuilder.Entity("AK.Models.Product", b =>
