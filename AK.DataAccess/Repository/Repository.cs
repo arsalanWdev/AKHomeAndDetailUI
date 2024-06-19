@@ -24,26 +24,51 @@ namespace AK.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeproperties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeproperties = null, bool tracked = false)
+        {
+            if (tracked)
+            {
+                IQueryable<T> query = dbSet;
+                query = query.Where(filter);
+
+                if (!string.IsNullOrEmpty(includeproperties))
+                {
+                    foreach (var includeprop in includeproperties
+                        .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        query = query.Include(includeprop);
+                    }
+                }
+
+                return query.FirstOrDefault();
+            }
+            else
+            {
+                IQueryable<T> query = dbSet.AsNoTracking();
+                query = query.Where(filter);
+
+                if (!string.IsNullOrEmpty(includeproperties))
+                {
+                    foreach (var includeprop in includeproperties
+                        .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        query = query.Include(includeprop);
+                    }
+                }
+
+                return query.FirstOrDefault();
+            }
+                
+            }
+            //catgeopry ,covertype
+            public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includeproperties = null)
         {
             IQueryable<T> query = dbSet;
-            query = query.Where(filter);
-
-            if (!string.IsNullOrEmpty(includeproperties))
+           if(filter != null)
             {
-                foreach (var includeprop in includeproperties
-                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(includeprop);
-                }
+                query = query.Where(filter);
             }
 
-            return query.FirstOrDefault();
-        }
-        //catgeopry ,covertype
-        public IEnumerable<T> GetAll(string? includeproperties = null)
-        {
-            IQueryable<T> query = dbSet;
             if (!string.IsNullOrEmpty(includeproperties))
             {
                 foreach(var includeprop in includeproperties
