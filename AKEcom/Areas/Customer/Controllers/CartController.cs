@@ -9,7 +9,7 @@ using Stripe.Checkout;
 using System.Security.Claims;
 using System.Security.Permissions;
 
-namespace AKEcom.Areas.Customer.Controllers
+namespace AKEcom.Areas.Customer.Controllers 
 {
     [Area("Customer")]
     [Authorize]
