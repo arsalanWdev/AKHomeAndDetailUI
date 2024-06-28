@@ -199,6 +199,7 @@ namespace AKEcom.Areas.Customer.Controllers
 					_unitofwork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
 					_unitofwork.Save();
 				}
+                HttpContext.Session.Clear();
 			}
 
 			List<ShoppingCart> shoppingCarts = _unitofwork.ShoppingCart

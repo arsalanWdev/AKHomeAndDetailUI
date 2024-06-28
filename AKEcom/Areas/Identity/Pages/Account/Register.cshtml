@@ -10,7 +10,14 @@
 
         <div class="row">
             <div class="col-12 text-center">
+                @if (User.IsInRole(SD.Role_Admin))
+                {
+                    <h2 class="py-2 text-white">Register - ADMIN PORTAL</h2>
+
+                }
+                else{
                 <h2 class="py-2 text-white">Register</h2>
+                }
             </div>
         </div>
 
@@ -87,7 +94,7 @@
                     </div>
                   
 
-
+                    @if (User.IsInRole(SD.Role_Admin)){
                     <div class="form-floating mb-3 col-md-6">
                         <select asp-for="Input.Role" asp-items="@Model.Input.RolesList" class="form-select">
 
@@ -103,11 +110,14 @@
                         </select>
                     </div>
 
+                    }
+
                     <div class="col-12" style="padding-bottom:50px;">
                     <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
                     </div>
                 </form>
             </div>
+            @if(!User.IsInRole(SD.Role_Admin)){
             <div class="col-md-12 p-3 text-center">
                 <section>
                     <p class="divider-text d-flex pt-3">Or</p>
@@ -140,6 +150,7 @@
                     }
                 </section>
             </div>
+            }
         </div>
 
     </div>
