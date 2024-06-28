@@ -1,5 +1,6 @@
 using AK.DataAccess.Repository.IRepository;
 using AK.Models;
+using AK.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,13 @@ namespace AKEcom.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            if (claim != null)
+            {
+                HttpContext.Session.SetInt32(SD.SessionCart,
+                   _unitofwork.ShoppingCart.GetAll(u => u.ApplicationUserId == claim.Value).Count());
+            }
             IEnumerable<Product> productlist = _unitofwork.Product.GetAll(includeproperties:"Category");
             return View(productlist);
         }
@@ -55,14 +63,20 @@ namespace AKEcom.Areas.Customer.Controllers
             {
                 cartfromdb.Count += shoppingcart.Count;
                 _unitofwork.ShoppingCart.Update(cartfromdb);
+                _unitofwork.Save();
+
             }
             else
             {
                 _unitofwork.ShoppingCart.Add(shoppingcart);
+                _unitofwork.Save();
+
+                HttpContext.Session.SetInt32(SD.SessionCart, 
+                    _unitofwork.ShoppingCart.GetAll(u => u.ApplicationUserId == UserId).Count());
+
             }
             TempData["success"] = "Cart Updated Successfully";
 
-            _unitofwork.Save();
 
             return RedirectToAction(nameof(Index));
         }

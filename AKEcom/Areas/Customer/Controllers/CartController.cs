@@ -226,12 +226,16 @@ namespace AKEcom.Areas.Customer.Controllers
 
         public IActionResult Minus(int cartId)
         {
-            var cartfromdb = _unitofwork.ShoppingCart.Get(u => u.Id == cartId);
+            var cartfromdb = _unitofwork.ShoppingCart.Get(u => u.Id == cartId,tracked:true);
             if (cartfromdb.Count <= 1)
             {
+                HttpContext.Session.SetInt32(SD.SessionCart,
+           _unitofwork.ShoppingCart.GetAll(u => u.ApplicationUserId 
+           == cartfromdb.ApplicationUserId).Count() - 1);
+
                 _unitofwork.ShoppingCart.Remove(cartfromdb);
             }
-            else
+            else 
             {
                 cartfromdb.Count -= 1;
                 _unitofwork.ShoppingCart.Update(cartfromdb);
@@ -245,9 +249,10 @@ namespace AKEcom.Areas.Customer.Controllers
 
         public IActionResult Remove(int cartId)
         {
-            var cartfromdb = _unitofwork.ShoppingCart.Get(u => u.Id == cartId);
-
+            var cartfromdb = _unitofwork.ShoppingCart.Get(u => u.Id == cartId,tracked:true);
             _unitofwork.ShoppingCart.Remove(cartfromdb);
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitofwork.ShoppingCart.GetAll(u => u.ApplicationUserId == cartfromdb.ApplicationUserId).Count()-1);
+
             _unitofwork.Save();
 
             return RedirectToAction(nameof(Index));
