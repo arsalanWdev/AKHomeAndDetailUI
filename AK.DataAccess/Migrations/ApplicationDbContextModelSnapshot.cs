@@ -47,19 +47,19 @@ namespace AK.DataAccess.Migrations
                         {
                             Id = 1,
                             DisplayOrder = 1,
-                            Name = "Action"
+                            Name = "Software Development"
                         },
                         new
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            Name = "SciFi"
+                            Name = "Algorithms"
                         },
                         new
                         {
                             Id = 3,
                             DisplayOrder = 3,
-                            Name = "History"
+                            Name = "Interview Preparation"
                         });
                 });
 
@@ -285,86 +285,128 @@ namespace AK.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Author = "Billy Spark",
+                            Author = "Robert C. Martin",
                             CategoryId = 1,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "SWD9999001",
+                            Description = "A book about writing cleaner, more efficient code.",
+                            ISBN = "978-0132350884",
                             ImageUrl = "",
-                            ListPrice = 99.0,
-                            Price = 90.0,
-                            Price100 = 80.0,
-                            Price50 = 85.0,
-                            Title = "Fortune of Time"
+                            ListPrice = 40.0,
+                            Price = 35.0,
+                            Price100 = 30.0,
+                            Price50 = 33.0,
+                            Title = "Clean Code: A Handbook of Agile Software Craftsmanship"
                         },
                         new
                         {
                             Id = 2,
-                            Author = "Nancy Hoover",
+                            Author = "Andrew Hunt, David Thomas",
                             CategoryId = 1,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "CAW777777701",
+                            Description = "A book about software engineering best practices.",
+                            ISBN = "978-0135957059",
                             ImageUrl = "",
-                            ListPrice = 40.0,
-                            Price = 30.0,
-                            Price100 = 20.0,
-                            Price50 = 25.0,
-                            Title = "Dark Skies"
+                            ListPrice = 50.0,
+                            Price = 45.0,
+                            Price100 = 40.0,
+                            Price50 = 42.0,
+                            Title = "The Pragmatic Programmer: Your Journey to Mastery"
                         },
                         new
                         {
                             Id = 3,
-                            Author = "Julian Button",
+                            Author = "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
                             CategoryId = 1,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "RITO5555501",
+                            Description = "A book about common design patterns in software development.",
+                            ISBN = "978-0201633610",
                             ImageUrl = "",
-                            ListPrice = 55.0,
-                            Price = 50.0,
-                            Price100 = 35.0,
-                            Price50 = 40.0,
-                            Title = "Vanish in the Sunset"
+                            ListPrice = 60.0,
+                            Price = 55.0,
+                            Price100 = 50.0,
+                            Price50 = 52.0,
+                            Title = "Design Patterns: Elements of Reusable Object-Oriented Software"
                         },
                         new
                         {
                             Id = 4,
-                            Author = "Abby Muscles",
+                            Author = "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein",
                             CategoryId = 2,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "WS3333333301",
+                            Description = "A comprehensive book on algorithms.",
+                            ISBN = "978-0262033848",
                             ImageUrl = "",
-                            ListPrice = 70.0,
-                            Price = 65.0,
-                            Price100 = 55.0,
-                            Price50 = 60.0,
-                            Title = "Cotton Candy"
+                            ListPrice = 90.0,
+                            Price = 85.0,
+                            Price100 = 80.0,
+                            Price50 = 82.0,
+                            Title = "Introduction to Algorithms"
                         },
                         new
                         {
                             Id = 5,
-                            Author = "Ron Parker",
-                            CategoryId = 2,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "SOTJ1111111101",
+                            Author = "Kyle Simpson",
+                            CategoryId = 1,
+                            Description = "A book about JavaScript scope and closures.",
+                            ISBN = "978-1449335588",
                             ImageUrl = "",
-                            ListPrice = 30.0,
-                            Price = 27.0,
-                            Price100 = 20.0,
-                            Price50 = 25.0,
-                            Title = "Rock in the Ocean"
+                            ListPrice = 35.0,
+                            Price = 30.0,
+                            Price100 = 25.0,
+                            Price50 = 28.0,
+                            Title = "You Don't Know JS: Scope & Closures"
                         },
                         new
                         {
                             Id = 6,
-                            Author = "Laura Phantom",
-                            CategoryId = 3,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "FOT000000001",
+                            Author = "Donald E. Knuth",
+                            CategoryId = 2,
+                            Description = "A comprehensive series of books on computer programming.",
+                            ISBN = "978-0321751041",
                             ImageUrl = "",
-                            ListPrice = 25.0,
-                            Price = 23.0,
+                            ListPrice = 240.0,
+                            Price = 220.0,
+                            Price100 = 200.0,
+                            Price50 = 210.0,
+                            Title = "The Art of Computer Programming, Volumes 1-4A Boxed Set"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Author = "Gayle Laakmann McDowell",
+                            CategoryId = 3,
+                            Description = "A book to help software developers prepare for coding interviews.",
+                            ISBN = "978-0984782857",
+                            ImageUrl = "",
+                            ListPrice = 40.0,
+                            Price = 35.0,
+                            Price100 = 30.0,
+                            Price50 = 33.0,
+                            Title = "Cracking the Coding Interview: 189 Programming Questions and Solutions"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Author = "Martin Fowler",
+                            CategoryId = 1,
+                            Description = "A book about improving the design of existing code.",
+                            ISBN = "978-0201485677",
+                            ImageUrl = "",
+                            ListPrice = 55.0,
+                            Price = 50.0,
+                            Price100 = 45.0,
+                            Price50 = 48.0,
+                            Title = "Refactoring: Improving the Design of Existing Code"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Author = "Douglas Crockford",
+                            CategoryId = 1,
+                            Description = "A book about the best features of JavaScript.",
+                            ISBN = "978-0596517748",
+                            ImageUrl = "",
+                            ListPrice = 30.0,
+                            Price = 28.0,
                             Price100 = 20.0,
-                            Price50 = 22.0,
-                            Title = "Leaves and Wonders"
+                            Price50 = 25.0,
+                            Title = "JavaScript: The Good Parts"
                         });
                 });
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AK.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240618202623_updatenametostringinapplicationuser")]
-    partial class updatenametostringinapplicationuser
+    [Migration("20240710174028_EcommerceByArsalanKhan")]
+    partial class EcommerceByArsalanKhan
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,20 +50,189 @@ namespace AK.DataAccess.Migrations
                         {
                             Id = 1,
                             DisplayOrder = 1,
-                            Name = "Action"
+                            Name = "Software Development"
                         },
                         new
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            Name = "SciFi"
+                            Name = "Algorithms"
                         },
                         new
                         {
                             Id = 3,
                             DisplayOrder = 3,
-                            Name = "History"
+                            Name = "Interview Preparation"
                         });
+                });
+
+            modelBuilder.Entity("AK.Models.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Tech City",
+                            Name = "Tech Solutions",
+                            PhoneNumber = "91221842179",
+                            PostalCode = "12121",
+                            State = "IL",
+                            StreetAddress = "123 Tech St"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Vivid City",
+                            Name = "Vivid Books",
+                            PhoneNumber = "394273847",
+                            PostalCode = "6666",
+                            State = "IL",
+                            StreetAddress = "123 vivid St"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            City = "Readers City",
+                            Name = "Readers Club",
+                            PhoneNumber = "4234234",
+                            PostalCode = "3444",
+                            State = "IL",
+                            StreetAddress = "123 Main St"
+                        });
+                });
+
+            modelBuilder.Entity("AK.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderHeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderHeaderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("AK.Models.OrderHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Carrier")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("OrderTotal")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("PaymentDueDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("PaymentIntentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SessionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ShippedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrackingNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("OrderHeaders");
                 });
 
             modelBuilder.Entity("AK.Models.Product", b =>
@@ -119,87 +288,156 @@ namespace AK.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Author = "Billy Spark",
+                            Author = "Robert C. Martin",
                             CategoryId = 1,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "SWD9999001",
+                            Description = "A book about writing cleaner, more efficient code.",
+                            ISBN = "978-0132350884",
                             ImageUrl = "",
-                            ListPrice = 99.0,
-                            Price = 90.0,
-                            Price100 = 80.0,
-                            Price50 = 85.0,
-                            Title = "Fortune of Time"
+                            ListPrice = 40.0,
+                            Price = 35.0,
+                            Price100 = 30.0,
+                            Price50 = 33.0,
+                            Title = "Clean Code: A Handbook of Agile Software Craftsmanship"
                         },
                         new
                         {
                             Id = 2,
-                            Author = "Nancy Hoover",
+                            Author = "Andrew Hunt, David Thomas",
                             CategoryId = 1,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "CAW777777701",
+                            Description = "A book about software engineering best practices.",
+                            ISBN = "978-0135957059",
                             ImageUrl = "",
-                            ListPrice = 40.0,
-                            Price = 30.0,
-                            Price100 = 20.0,
-                            Price50 = 25.0,
-                            Title = "Dark Skies"
+                            ListPrice = 50.0,
+                            Price = 45.0,
+                            Price100 = 40.0,
+                            Price50 = 42.0,
+                            Title = "The Pragmatic Programmer: Your Journey to Mastery"
                         },
                         new
                         {
                             Id = 3,
-                            Author = "Julian Button",
+                            Author = "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
                             CategoryId = 1,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "RITO5555501",
+                            Description = "A book about common design patterns in software development.",
+                            ISBN = "978-0201633610",
                             ImageUrl = "",
-                            ListPrice = 55.0,
-                            Price = 50.0,
-                            Price100 = 35.0,
-                            Price50 = 40.0,
-                            Title = "Vanish in the Sunset"
+                            ListPrice = 60.0,
+                            Price = 55.0,
+                            Price100 = 50.0,
+                            Price50 = 52.0,
+                            Title = "Design Patterns: Elements of Reusable Object-Oriented Software"
                         },
                         new
                         {
                             Id = 4,
-                            Author = "Abby Muscles",
+                            Author = "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein",
                             CategoryId = 2,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "WS3333333301",
+                            Description = "A comprehensive book on algorithms.",
+                            ISBN = "978-0262033848",
                             ImageUrl = "",
-                            ListPrice = 70.0,
-                            Price = 65.0,
-                            Price100 = 55.0,
-                            Price50 = 60.0,
-                            Title = "Cotton Candy"
+                            ListPrice = 90.0,
+                            Price = 85.0,
+                            Price100 = 80.0,
+                            Price50 = 82.0,
+                            Title = "Introduction to Algorithms"
                         },
                         new
                         {
                             Id = 5,
-                            Author = "Ron Parker",
-                            CategoryId = 2,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "SOTJ1111111101",
+                            Author = "Kyle Simpson",
+                            CategoryId = 1,
+                            Description = "A book about JavaScript scope and closures.",
+                            ISBN = "978-1449335588",
                             ImageUrl = "",
-                            ListPrice = 30.0,
-                            Price = 27.0,
-                            Price100 = 20.0,
-                            Price50 = 25.0,
-                            Title = "Rock in the Ocean"
+                            ListPrice = 35.0,
+                            Price = 30.0,
+                            Price100 = 25.0,
+                            Price50 = 28.0,
+                            Title = "You Don't Know JS: Scope & Closures"
                         },
                         new
                         {
                             Id = 6,
-                            Author = "Laura Phantom",
-                            CategoryId = 3,
-                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
-                            ISBN = "FOT000000001",
+                            Author = "Donald E. Knuth",
+                            CategoryId = 2,
+                            Description = "A comprehensive series of books on computer programming.",
+                            ISBN = "978-0321751041",
                             ImageUrl = "",
-                            ListPrice = 25.0,
-                            Price = 23.0,
+                            ListPrice = 240.0,
+                            Price = 220.0,
+                            Price100 = 200.0,
+                            Price50 = 210.0,
+                            Title = "The Art of Computer Programming, Volumes 1-4A Boxed Set"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Author = "Gayle Laakmann McDowell",
+                            CategoryId = 3,
+                            Description = "A book to help software developers prepare for coding interviews.",
+                            ISBN = "978-0984782857",
+                            ImageUrl = "",
+                            ListPrice = 40.0,
+                            Price = 35.0,
+                            Price100 = 30.0,
+                            Price50 = 33.0,
+                            Title = "Cracking the Coding Interview: 189 Programming Questions and Solutions"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Author = "Martin Fowler",
+                            CategoryId = 1,
+                            Description = "A book about improving the design of existing code.",
+                            ISBN = "978-0201485677",
+                            ImageUrl = "",
+                            ListPrice = 55.0,
+                            Price = 50.0,
+                            Price100 = 45.0,
+                            Price50 = 48.0,
+                            Title = "Refactoring: Improving the Design of Existing Code"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Author = "Douglas Crockford",
+                            CategoryId = 1,
+                            Description = "A book about the best features of JavaScript.",
+                            ISBN = "978-0596517748",
+                            ImageUrl = "",
+                            ListPrice = 30.0,
+                            Price = 28.0,
                             Price100 = 20.0,
-                            Price50 = 22.0,
-                            Title = "Leaves and Wonders"
+                            Price50 = 25.0,
+                            Title = "JavaScript: The Good Parts"
                         });
+                });
+
+            modelBuilder.Entity("AK.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -416,6 +654,9 @@ namespace AK.DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -429,7 +670,39 @@ namespace AK.DataAccess.Migrations
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("AK.Models.OrderDetail", b =>
+                {
+                    b.HasOne("AK.Models.OrderHeader", "OrderHeader")
+                        .WithMany()
+                        .HasForeignKey("OrderHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AK.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderHeader");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("AK.Models.OrderHeader", b =>
+                {
+                    b.HasOne("AK.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("AK.Models.Product", b =>
@@ -441,6 +714,25 @@ namespace AK.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("AK.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("AK.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AK.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -492,6 +784,15 @@ namespace AK.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AK.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("AK.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

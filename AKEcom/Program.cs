@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using AK.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Stripe;
+using AK.DataAccess.DbInitializer;
+using BulkyBook.DataAccess.DbInitializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +44,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly= true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -61,10 +64,13 @@ app.UseStaticFiles();
 
 
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
+
 app.UseRouting();
+SeedDatabase();
+
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSession(); 
+app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
@@ -72,3 +78,12 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize();
+    }
+}
