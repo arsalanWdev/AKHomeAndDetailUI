@@ -47,19 +47,31 @@ namespace AK.DataAccess.Migrations
                         {
                             Id = 1,
                             DisplayOrder = 1,
-                            Name = "Software Development"
+                            Name = "Smartphones"
                         },
                         new
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            Name = "Algorithms"
+                            Name = "Laptops"
                         },
                         new
                         {
                             Id = 3,
                             DisplayOrder = 3,
-                            Name = "Interview Preparation"
+                            Name = "Wearables"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DisplayOrder = 4,
+                            Name = "Gaming"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DisplayOrder = 5,
+                            Name = "Audio"
                         });
                 });
 
@@ -98,32 +110,32 @@ namespace AK.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            City = "Tech City",
-                            Name = "Tech Solutions",
-                            PhoneNumber = "91221842179",
-                            PostalCode = "12121",
-                            State = "IL",
-                            StreetAddress = "123 Tech St"
+                            City = "Techville",
+                            Name = "Tech Giants Inc.",
+                            PhoneNumber = "1234567890",
+                            PostalCode = "11221",
+                            State = "CA",
+                            StreetAddress = "123 Innovation Dr"
                         },
                         new
                         {
                             Id = 2,
-                            City = "Vivid City",
-                            Name = "Vivid Books",
-                            PhoneNumber = "394273847",
-                            PostalCode = "6666",
-                            State = "IL",
-                            StreetAddress = "123 vivid St"
+                            City = "Gadget City",
+                            Name = "Gadget World",
+                            PhoneNumber = "0987654321",
+                            PostalCode = "22332",
+                            State = "NY",
+                            StreetAddress = "456 Gadget Blvd"
                         },
                         new
                         {
                             Id = 3,
-                            City = "Readers City",
-                            Name = "Readers Club",
-                            PhoneNumber = "4234234",
-                            PostalCode = "3444",
-                            State = "IL",
-                            StreetAddress = "123 Main St"
+                            City = "Tech Hub",
+                            Name = "Innovative Electronics",
+                            PhoneNumber = "5678901234",
+                            PostalCode = "33443",
+                            State = "TX",
+                            StreetAddress = "789 Future Rd"
                         });
                 });
 
@@ -251,10 +263,6 @@ namespace AK.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -271,6 +279,10 @@ namespace AK.DataAccess.Migrations
                     b.Property<double>("Price50")
                         .HasColumnType("float");
 
+                    b.Property<string>("SKU")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -285,128 +297,72 @@ namespace AK.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Author = "Robert C. Martin",
+                            Author = "Apple",
                             CategoryId = 1,
-                            Description = "A book about writing cleaner, more efficient code.",
-                            ISBN = "978-0132350884",
+                            Description = "Latest iPhone model with advanced features.",
                             ImageUrl = "",
-                            ListPrice = 40.0,
-                            Price = 35.0,
-                            Price100 = 30.0,
-                            Price50 = 33.0,
-                            Title = "Clean Code: A Handbook of Agile Software Craftsmanship"
+                            ListPrice = 999.0,
+                            Price = 950.0,
+                            Price100 = 900.0,
+                            Price50 = 925.0,
+                            SKU = "IP14PRO",
+                            Title = "iPhone 14 Pro"
                         },
                         new
                         {
                             Id = 2,
-                            Author = "Andrew Hunt, David Thomas",
-                            CategoryId = 1,
-                            Description = "A book about software engineering best practices.",
-                            ISBN = "978-0135957059",
+                            Author = "Apple",
+                            CategoryId = 2,
+                            Description = "High-performance laptop for professionals.",
                             ImageUrl = "",
-                            ListPrice = 50.0,
-                            Price = 45.0,
-                            Price100 = 40.0,
-                            Price50 = 42.0,
-                            Title = "The Pragmatic Programmer: Your Journey to Mastery"
+                            ListPrice = 2399.0,
+                            Price = 2300.0,
+                            Price100 = 2200.0,
+                            Price50 = 2250.0,
+                            SKU = "MBP16",
+                            Title = "MacBook Pro 16-inch"
                         },
                         new
                         {
                             Id = 3,
-                            Author = "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
-                            CategoryId = 1,
-                            Description = "A book about common design patterns in software development.",
-                            ISBN = "978-0201633610",
+                            Author = "Apple",
+                            CategoryId = 3,
+                            Description = "Smartwatch with health tracking features.",
                             ImageUrl = "",
-                            ListPrice = 60.0,
-                            Price = 55.0,
-                            Price100 = 50.0,
-                            Price50 = 52.0,
-                            Title = "Design Patterns: Elements of Reusable Object-Oriented Software"
+                            ListPrice = 399.0,
+                            Price = 375.0,
+                            Price100 = 350.0,
+                            Price50 = 365.0,
+                            SKU = "AW8",
+                            Title = "Apple Watch Series 8"
                         },
                         new
                         {
                             Id = 4,
-                            Author = "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein",
-                            CategoryId = 2,
-                            Description = "A comprehensive book on algorithms.",
-                            ISBN = "978-0262033848",
+                            Author = "Sony",
+                            CategoryId = 4,
+                            Description = "Next-gen gaming console with 4K capabilities.",
                             ImageUrl = "",
-                            ListPrice = 90.0,
-                            Price = 85.0,
-                            Price100 = 80.0,
-                            Price50 = 82.0,
-                            Title = "Introduction to Algorithms"
+                            ListPrice = 499.0,
+                            Price = 480.0,
+                            Price100 = 450.0,
+                            Price50 = 470.0,
+                            SKU = "PS5",
+                            Title = "PlayStation 5"
                         },
                         new
                         {
                             Id = 5,
-                            Author = "Kyle Simpson",
-                            CategoryId = 1,
-                            Description = "A book about JavaScript scope and closures.",
-                            ISBN = "978-1449335588",
+                            Author = "Bose",
+                            CategoryId = 5,
+                            Description = "Noise-cancelling wireless headphones.",
                             ImageUrl = "",
-                            ListPrice = 35.0,
-                            Price = 30.0,
-                            Price100 = 25.0,
-                            Price50 = 28.0,
-                            Title = "You Don't Know JS: Scope & Closures"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Author = "Donald E. Knuth",
-                            CategoryId = 2,
-                            Description = "A comprehensive series of books on computer programming.",
-                            ISBN = "978-0321751041",
-                            ImageUrl = "",
-                            ListPrice = 240.0,
-                            Price = 220.0,
-                            Price100 = 200.0,
-                            Price50 = 210.0,
-                            Title = "The Art of Computer Programming, Volumes 1-4A Boxed Set"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Author = "Gayle Laakmann McDowell",
-                            CategoryId = 3,
-                            Description = "A book to help software developers prepare for coding interviews.",
-                            ISBN = "978-0984782857",
-                            ImageUrl = "",
-                            ListPrice = 40.0,
-                            Price = 35.0,
-                            Price100 = 30.0,
-                            Price50 = 33.0,
-                            Title = "Cracking the Coding Interview: 189 Programming Questions and Solutions"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Author = "Martin Fowler",
-                            CategoryId = 1,
-                            Description = "A book about improving the design of existing code.",
-                            ISBN = "978-0201485677",
-                            ImageUrl = "",
-                            ListPrice = 55.0,
-                            Price = 50.0,
-                            Price100 = 45.0,
-                            Price50 = 48.0,
-                            Title = "Refactoring: Improving the Design of Existing Code"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Author = "Douglas Crockford",
-                            CategoryId = 1,
-                            Description = "A book about the best features of JavaScript.",
-                            ISBN = "978-0596517748",
-                            ImageUrl = "",
-                            ListPrice = 30.0,
-                            Price = 28.0,
-                            Price100 = 20.0,
-                            Price50 = 25.0,
-                            Title = "JavaScript: The Good Parts"
+                            ListPrice = 299.0,
+                            Price = 275.0,
+                            Price100 = 250.0,
+                            Price50 = 265.0,
+                            SKU = "BOSEQC35II",
+                            Title = "Bose QuietComfort 35 II"
                         });
                 });
 

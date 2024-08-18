@@ -25,7 +25,7 @@ namespace AK.DataAccess.Repository
             if(objfromdb != null)
             {
                 objfromdb.Title = obj.Title;
-                objfromdb.ISBN = obj.ISBN;
+                objfromdb.SKU = obj.SKU;
               
                 objfromdb.Price = obj.Price;
                 objfromdb.Price50 = obj.Price50;

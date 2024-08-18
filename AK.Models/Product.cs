@@ -19,7 +19,7 @@ namespace AK.Models
         public string Description{ get; set; }
 
         [Required]
-        public string ISBN { get; set; }
+        public string SKU { get; set; }
 
         [Required]
         public string Author { get; set; }

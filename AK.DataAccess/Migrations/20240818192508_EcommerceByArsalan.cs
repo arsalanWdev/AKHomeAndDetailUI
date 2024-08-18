@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AK.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class EcommerceByArsalanKhan : Migration
+    public partial class EcommerceByArsalan : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -88,7 +88,7 @@ namespace AK.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ISBN = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SKU = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ListPrice = table.Column<double>(type: "float", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
@@ -326,9 +326,11 @@ namespace AK.DataAccess.Migrations
                 columns: new[] { "Id", "DisplayOrder", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, "Software Development" },
-                    { 2, 2, "Algorithms" },
-                    { 3, 3, "Interview Preparation" }
+                    { 1, 1, "Smartphones" },
+                    { 2, 2, "Laptops" },
+                    { 3, 3, "Wearables" },
+                    { 4, 4, "Gaming" },
+                    { 5, 5, "Audio" }
                 });
 
             migrationBuilder.InsertData(
@@ -336,25 +338,21 @@ namespace AK.DataAccess.Migrations
                 columns: new[] { "Id", "City", "Name", "PhoneNumber", "PostalCode", "State", "StreetAddress" },
                 values: new object[,]
                 {
-                    { 1, "Tech City", "Tech Solutions", "91221842179", "12121", "IL", "123 Tech St" },
-                    { 2, "Vivid City", "Vivid Books", "394273847", "6666", "IL", "123 vivid St" },
-                    { 3, "Readers City", "Readers Club", "4234234", "3444", "IL", "123 Main St" }
+                    { 1, "Techville", "Tech Giants Inc.", "1234567890", "11221", "CA", "123 Innovation Dr" },
+                    { 2, "Gadget City", "Gadget World", "0987654321", "22332", "NY", "456 Gadget Blvd" },
+                    { 3, "Tech Hub", "Innovative Electronics", "5678901234", "33443", "TX", "789 Future Rd" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Author", "CategoryId", "Description", "ISBN", "ImageUrl", "ListPrice", "Price", "Price100", "Price50", "Title" },
+                columns: new[] { "Id", "Author", "CategoryId", "Description", "ImageUrl", "ListPrice", "Price", "Price100", "Price50", "SKU", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Robert C. Martin", 1, "A book about writing cleaner, more efficient code.", "978-0132350884", "", 40.0, 35.0, 30.0, 33.0, "Clean Code: A Handbook of Agile Software Craftsmanship" },
-                    { 2, "Andrew Hunt, David Thomas", 1, "A book about software engineering best practices.", "978-0135957059", "", 50.0, 45.0, 40.0, 42.0, "The Pragmatic Programmer: Your Journey to Mastery" },
-                    { 3, "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides", 1, "A book about common design patterns in software development.", "978-0201633610", "", 60.0, 55.0, 50.0, 52.0, "Design Patterns: Elements of Reusable Object-Oriented Software" },
-                    { 4, "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein", 2, "A comprehensive book on algorithms.", "978-0262033848", "", 90.0, 85.0, 80.0, 82.0, "Introduction to Algorithms" },
-                    { 5, "Kyle Simpson", 1, "A book about JavaScript scope and closures.", "978-1449335588", "", 35.0, 30.0, 25.0, 28.0, "You Don't Know JS: Scope & Closures" },
-                    { 6, "Donald E. Knuth", 2, "A comprehensive series of books on computer programming.", "978-0321751041", "", 240.0, 220.0, 200.0, 210.0, "The Art of Computer Programming, Volumes 1-4A Boxed Set" },
-                    { 7, "Gayle Laakmann McDowell", 3, "A book to help software developers prepare for coding interviews.", "978-0984782857", "", 40.0, 35.0, 30.0, 33.0, "Cracking the Coding Interview: 189 Programming Questions and Solutions" },
-                    { 8, "Martin Fowler", 1, "A book about improving the design of existing code.", "978-0201485677", "", 55.0, 50.0, 45.0, 48.0, "Refactoring: Improving the Design of Existing Code" },
-                    { 9, "Douglas Crockford", 1, "A book about the best features of JavaScript.", "978-0596517748", "", 30.0, 28.0, 20.0, 25.0, "JavaScript: The Good Parts" }
+                    { 1, "Apple", 1, "Latest iPhone model with advanced features.", "", 999.0, 950.0, 900.0, 925.0, "IP14PRO", "iPhone 14 Pro" },
+                    { 2, "Apple", 2, "High-performance laptop for professionals.", "", 2399.0, 2300.0, 2200.0, 2250.0, "MBP16", "MacBook Pro 16-inch" },
+                    { 3, "Apple", 3, "Smartwatch with health tracking features.", "", 399.0, 375.0, 350.0, 365.0, "AW8", "Apple Watch Series 8" },
+                    { 4, "Sony", 4, "Next-gen gaming console with 4K capabilities.", "", 499.0, 480.0, 450.0, 470.0, "PS5", "PlayStation 5" },
+                    { 5, "Bose", 5, "Noise-cancelling wireless headphones.", "", 299.0, 275.0, 250.0, 265.0, "BOSEQC35II", "Bose QuietComfort 35 II" }
                 });
 
             migrationBuilder.CreateIndex(
