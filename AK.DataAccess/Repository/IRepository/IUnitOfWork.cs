@@ -15,6 +15,7 @@ namespace AK.DataAccess.Repository.IRepository
         IApplicationUserRepository ApplicationUser { get; }
         IOrderDetailRepository OrderDetail { get; }
         IOrderHeaderRepository OrderHeader { get; }
+        IPortfolioRepository Portfolio { get; }
 
 
         void ClearChangeTracker();

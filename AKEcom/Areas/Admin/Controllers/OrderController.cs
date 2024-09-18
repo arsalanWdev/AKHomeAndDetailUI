@@ -13,34 +13,34 @@ using System.Security.Claims;
 
 namespace AKEcom.Areas.Admin.Controllers
 {
-	[Area("Admin")]
+    [Area("Admin")]
     [Authorize]
-	public class OrderController : Controller
-	{
-		private readonly IUnitOfWork _unitofwork;
+    public class OrderController : Controller
+    {
+        private readonly IUnitOfWork _unitofwork;
         [BindProperty]
         public OrderVM OrderVM { get; set; }
         public OrderController(IUnitOfWork unitofwork)
-		{
-			_unitofwork = unitofwork;
-		}
-		public IActionResult Index()
-		{
-			return View();
-		}
+        {
+            _unitofwork = unitofwork;
+        }
+        public IActionResult Index()
+        {
+            return View();
+        }
 
         public IActionResult Details(int orderId)
         {
             OrderVM = new()
             {
                 OrderHeader = _unitofwork.OrderHeader.Get(u => u.Id == orderId, includeproperties: "ApplicationUser"),
-                OrderDetails = _unitofwork.OrderDetail.GetAll(u =>u.OrderHeaderId==orderId, includeproperties:"Product")
+                OrderDetails = _unitofwork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeproperties: "Product")
             };
             return View(OrderVM);
         }
 
         [HttpPost]
-        [Authorize(Roles =SD.Role_Admin+","+SD.Role_Employee)]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public IActionResult UpdateOrderDetail()
         {
             var orderHeaderFromDb = _unitofwork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
@@ -49,7 +49,7 @@ namespace AKEcom.Areas.Admin.Controllers
             orderHeaderFromDb.StreetAddress = OrderVM.OrderHeader.StreetAddress;
             orderHeaderFromDb.City = OrderVM.OrderHeader.City;
             orderHeaderFromDb.State = OrderVM.OrderHeader.State;
-            orderHeaderFromDb.PostalCode= OrderVM.OrderHeader.PostalCode;
+            orderHeaderFromDb.PostalCode = OrderVM.OrderHeader.PostalCode;
 
             if (!string.IsNullOrEmpty(OrderVM.OrderHeader.Carrier))
             {
@@ -64,7 +64,7 @@ namespace AKEcom.Areas.Admin.Controllers
             _unitofwork.Save();
 
             TempData["Success"] = "Order Details  Updated Successfully";
-            return RedirectToAction(nameof(Details),new {orderId=orderHeaderFromDb.Id});
+            return RedirectToAction(nameof(Details), new { orderId = orderHeaderFromDb.Id });
         }
 
 
@@ -129,7 +129,7 @@ namespace AKEcom.Areas.Admin.Controllers
         {
             var orderHeaderFromDb = _unitofwork.OrderHeader.Get(u => u.Id == OrderVM.OrderHeader.Id);
 
-            if(orderHeaderFromDb.PaymentStatus == SD.PaymentStatusApproved)
+            if (orderHeaderFromDb.PaymentStatus == SD.PaymentStatusApproved)
             {
                 var options = new RefundCreateOptions
                 {
@@ -140,7 +140,7 @@ namespace AKEcom.Areas.Admin.Controllers
                 Refund refund = service.Create(options);
                 _unitofwork.OrderHeader.UpdateStatus(orderHeaderFromDb.Id, SD.StatusCancelled, SD.StatusRefunded);
 
-                
+
             }
             else
             {
@@ -149,7 +149,7 @@ namespace AKEcom.Areas.Admin.Controllers
             }
             _unitofwork.Save();
             TempData["Success"] = "Order Cancelled Successfully";
-            return RedirectToAction(nameof(Details), new { orderId =OrderVM.OrderHeader.Id});
+            return RedirectToAction(nameof(Details), new { orderId = OrderVM.OrderHeader.Id });
         }
 
 
@@ -228,18 +228,18 @@ namespace AKEcom.Areas.Admin.Controllers
 
         #region APICALL
         [HttpGet]
-		public IActionResult GetAll(string status)
-		{
+        public IActionResult GetAll(string status)
+        {
             IEnumerable<OrderHeader> objOrderHeaders;
 
-            if(User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+            if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
             {
                 objOrderHeaders = _unitofwork.OrderHeader.GetAll(includeproperties: "ApplicationUser").ToList();
             }
             else
             {
                 var claimsIdentity = (ClaimsIdentity)User.Identity;
-                var userId= claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
                 objOrderHeaders = _unitofwork.OrderHeader.GetAll(u => u.ApplicationUserId == userId, includeproperties: "ApplicationUser");
             }
@@ -248,7 +248,7 @@ namespace AKEcom.Areas.Admin.Controllers
             switch (status)
             {
                 case "pending":
-					objOrderHeaders = objOrderHeaders.Where(u => u.PaymentStatus == SD.PaymentStatusDelayedPayment);
+                    objOrderHeaders = objOrderHeaders.Where(u => u.PaymentStatus == SD.PaymentStatusDelayedPayment);
                     break;
                 case "inprocess":
                     objOrderHeaders = objOrderHeaders.Where(u => u.OrderStatus == SD.StatusInProcess);
@@ -267,12 +267,12 @@ namespace AKEcom.Areas.Admin.Controllers
 
 
             return Json(new { data = objOrderHeaders });
-		}
+        }
 
-		#endregion
-
-
+        #endregion
 
 
-	}
+
+
+    }
 }

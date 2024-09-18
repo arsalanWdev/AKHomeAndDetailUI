@@ -12,6 +12,7 @@ namespace AK.Models
 {
     public class Product
     {
+
         [Key]
         public int Id { get; set; }
         [Required]
@@ -48,6 +49,7 @@ namespace AK.Models
         public Category Category { get; set; }
         [ValidateNever]
         public string ImageUrl {  get; set; }
+
 
     }
 }
