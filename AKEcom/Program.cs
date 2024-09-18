@@ -7,8 +7,8 @@ using AK.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Stripe;
 using AK.DataAccess.DbInitializer;
-using BulkyBook.DataAccess.DbInitializer;
 using Microsoft.Extensions.Options;
+using BulkyBook.DataAccess.DbInitializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
