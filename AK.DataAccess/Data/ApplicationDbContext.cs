@@ -14,10 +14,10 @@ namespace AK.DataAccess.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
-        public DbSet<Company> Companies { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<OrderHeader> OrderHeaders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,38 +33,8 @@ namespace AK.DataAccess.Data
             );
 
             // Seeding Companies
-            modelBuilder.Entity<Company>().HasData(
-                new Company
-                {
-                    Id = 1,
-                    Name = "Tech Giants Inc.",
-                    StreetAddress = "123 Innovation Dr",
-                    City = "Techville",
-                    PostalCode = "11221",
-                    State = "CA",
-                    PhoneNumber = "1234567890"
-                },
-                new Company
-                {
-                    Id = 2,
-                    Name = "Gadget World",
-                    StreetAddress = "456 Gadget Blvd",
-                    City = "Gadget City",
-                    PostalCode = "22332",
-                    State = "NY",
-                    PhoneNumber = "0987654321"
-                },
-                new Company
-                {
-                    Id = 3,
-                    Name = "Innovative Electronics",
-                    StreetAddress = "789 Future Rd",
-                    City = "Tech Hub",
-                    PostalCode = "33443",
-                    State = "TX",
-                    PhoneNumber = "5678901234"
-                }
-            );
+
+            
 
             // Seeding Products
             modelBuilder.Entity<Product>().HasData(

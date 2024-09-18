@@ -5,10 +5,7 @@ using AK.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BulkyBook.DataAccess.DbInitializer
 {
@@ -28,49 +25,51 @@ namespace BulkyBook.DataAccess.DbInitializer
             _db = db;
         }
 
-
         public void Initialize()
         {
-            //migrations if they are not applied
+            // Migrate database if there are pending migrations
             try
             {
-                if (_db.Database.GetPendingMigrations().Count() > 0)
+                if (_db.Database.GetPendingMigrations().Any())
                 {
                     _db.Database.Migrate();
                 }
             }
             catch (Exception ex)
             {
-
+                // Handle the exception (log it, rethrow it, etc.)
             }
 
-            //create roles if they are not created
+            // Create roles if they do not exist
             if (!_roleManager.RoleExistsAsync(SD.Role_Admin).GetAwaiter().GetResult())
             {
+                // Create roles
+                _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(SD.Role_InteriorDesigner)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Company)).GetAwaiter().GetResult();
 
-                //if roles are not created, then we will create admin user as well
-
+                // Create admin user
                 _userManager.CreateAsync(new ApplicationUser
                 {
-                    UserName = "admin@gmail.com",
-                    Email = "admin@gmail.com",
-                    Name = "Arsalan Khan",
+                    UserName = "admin@decorvista.com",
+                    Email = "admin@decorvista.com",
+                    Name = "Admin User",
                     PhoneNumber = "1112223333",
-                    StreetAddress = "test 123 ",
+                    StreetAddress = "123 Admin St",
                     State = "SD",
                     PostalCode = "23422",
                     City = "Karachi"
                 }, "Admin123*").GetAwaiter().GetResult();
 
-                ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@gmail.com");
+                ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@decorvista.com");
 
-                _userManager.AddToRoleAsync(user, SD.Role_Admin).GetAwaiter().GetResult();
+                if (user != null)
+                {
+                    _userManager.AddToRoleAsync(user, SD.Role_Admin).GetAwaiter().GetResult();
+                }
+            }
 
-            } 
             return;
         }
     }

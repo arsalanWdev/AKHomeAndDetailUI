@@ -17,7 +17,7 @@ namespace AK.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -72,70 +72,6 @@ namespace AK.DataAccess.Migrations
                             Id = 5,
                             DisplayOrder = 5,
                             Name = "Audio"
-                        });
-                });
-
-            modelBuilder.Entity("AK.Models.Company", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "Techville",
-                            Name = "Tech Giants Inc.",
-                            PhoneNumber = "1234567890",
-                            PostalCode = "11221",
-                            State = "CA",
-                            StreetAddress = "123 Innovation Dr"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Gadget City",
-                            Name = "Gadget World",
-                            PhoneNumber = "0987654321",
-                            PostalCode = "22332",
-                            State = "NY",
-                            StreetAddress = "456 Gadget Blvd"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Tech Hub",
-                            Name = "Innovative Electronics",
-                            PhoneNumber = "5678901234",
-                            PostalCode = "33443",
-                            State = "TX",
-                            StreetAddress = "789 Future Rd"
                         });
                 });
 
@@ -514,7 +450,7 @@ namespace AK.DataAccess.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+                    b.HasDiscriminator().HasValue("IdentityUser");
 
                     b.UseTphMappingStrategy();
                 });
@@ -607,9 +543,6 @@ namespace AK.DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -617,13 +550,15 @@ namespace AK.DataAccess.Migrations
                     b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("CompanyId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -737,15 +672,6 @@ namespace AK.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("AK.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("AK.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

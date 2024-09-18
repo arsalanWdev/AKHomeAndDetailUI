@@ -138,25 +138,46 @@ namespace AKEcom.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            var userIsAdmin = User.IsInRole(SD.Role_Admin);
 
-          
+            // Get all roles
+            var allRoles = _roleManager.Roles.Select(x => x.Name).ToList();
+
+            IEnumerable<SelectListItem> filteredRoles;
+
+            if (userIsAdmin)
+            {
+                // Show all roles if the user is an admin
+                filteredRoles = allRoles.Select(role => new SelectListItem
+                {
+                    Text = role,
+                    Value = role
+                }).ToList();
+            }
+            else
+            {
+                // Show specific roles for regular users
+                filteredRoles = allRoles.Where(role =>
+                   
+                    role == SD.Role_Customer ||
+                    role == SD.Role_InteriorDesigner)
+                    .Select(role => new SelectListItem
+                    {
+                        Text = role,
+                        Value = role
+                    }).ToList();
+            }
 
             Input = new()
             {
-                RolesList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
-                {
-                    Text = i,
-                    Value = i
-                }),
-                CompanyList = _unitofwork.Company.GetAll().Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                })
+                RolesList = filteredRoles,
+                // Initialize other properties as needed
             };
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
+
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
@@ -175,10 +196,7 @@ namespace AKEcom.Areas.Identity.Pages.Account
                 user.State = Input.State;
                 user.PostalCode = Input.PostalCode;
                 user.PhoneNumber = Input.PhoneNumber;
-                if(Input.Role == SD.Role_Company)
-                {
-                    user.CompanyId = Input.CompanyId;
-                }
+             
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
