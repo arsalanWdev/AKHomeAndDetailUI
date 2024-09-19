@@ -12,8 +12,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AK.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
+<<<<<<<< HEAD:AK.DataAccess/Migrations/20240918151918_InitialMigrate.Designer.cs
     [Migration("20240918151918_InitialMigrate")]
     partial class InitialMigrate
+========
+    [Migration("20240918112609_intitial")]
+    partial class intitial
+>>>>>>>> fb891e3229d09b796068bb516faa9b6191825c68:AK.DataAccess/Migrations/20240918112609_intitial.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

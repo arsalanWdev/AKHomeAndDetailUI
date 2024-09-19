@@ -8,7 +8,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AK.DataAccess.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:AK.DataAccess/Migrations/20240918151918_InitialMigrate.cs
     public partial class InitialMigrate : Migration
+========
+    public partial class intitial : Migration
+>>>>>>>> fb891e3229d09b796068bb516faa9b6191825c68:AK.DataAccess/Migrations/20240918112609_intitial.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
