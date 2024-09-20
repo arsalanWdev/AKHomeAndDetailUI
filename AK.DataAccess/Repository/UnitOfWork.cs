@@ -20,6 +20,9 @@ namespace AK.DataAccess.Repository
         public IOrderHeaderRepository OrderHeader { get; private set; }
         public IOrderDetailRepository OrderDetail { get; private set; }
         public IPortfolioRepository Portfolio { get; private set; }
+        public IGalleryRepository Gallery { get; private set; }
+        public IFavouriteRepository Favourite { get; private set; }
+
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -31,6 +34,8 @@ namespace AK.DataAccess.Repository
             OrderHeader = new OrderHeaderRepository(_db);
             OrderDetail = new OrderDetailRepository(_db);
             Portfolio = new PortfolioRepository(_db);
+           Gallery  = new GalleryRepository(_db);
+            Favourite= new FavouriteRepository(_db);
         }
 
         public void ClearChangeTracker()

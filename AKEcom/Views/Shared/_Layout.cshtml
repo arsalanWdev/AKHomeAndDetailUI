@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Http
+﻿@using AK.Utility
+@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 
 <!DOCTYPE html>
@@ -41,13 +42,27 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Orders</a>
                         </li>
-                        @if (User.IsInRole(SD.Role_InteriorDesigner))
+
+                        @if (User.IsInRole("Customer"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="CustomerGall" asp-action="Index">Gallery</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("MyFavourites", "CustomerGall", new { area = "Customer" })">
+                                    Favourites (@ViewBag.FavouriteCount)
+                                </a>
+                            </li>
+
+
+                        }
+
+                        @if (User.IsInRole("InteriorDesigner"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Customer" asp-controller="Portfolio" asp-action="Index">Create Portfolio</a>
                             </li>
                         }
-                      
 
                         @if (User.IsInRole(SD.Role_Admin))
                         {
@@ -70,6 +85,9 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">User List</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Gallery" asp-action="Index">Create Gallery</a>
                                     </li>
                                 </ul>
                             </li>
@@ -94,13 +112,14 @@
                                 <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
 
                                     <i class="bi bi-cart"></i> &nbsp;
-                                    (0) 
+                                    (0)
                                 </a>
                             </li>
                         }
-
                     </ul>
                     <partial name="_LoginPartial"></partial>
+                   
+
                 </div>
             </div>
         </nav>

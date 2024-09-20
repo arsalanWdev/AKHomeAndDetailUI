@@ -18,5 +18,8 @@ namespace AK.Models
         [DisplayName("Display Order")]
         [Range(1,100,ErrorMessage ="Invalid Value")]
         public int DisplayOrder { get; set; }
+
+
+
     }
 }

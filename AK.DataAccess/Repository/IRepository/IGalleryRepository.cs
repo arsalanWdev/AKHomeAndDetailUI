@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace AK.DataAccess.Repository.IRepository
 {
-    public interface IPortfolioRepository:IRepository<Portfolio>
+    public interface IGalleryRepository:IRepository<Gallery>
     {
-        void Update(Portfolio obj);
-        IEnumerable<Portfolio> GetPortfolioByDesignerId(string userId);
-
+        void Update(Gallery obj);
+        Task<IEnumerable<Gallery>> GetAllAsync();
 
     }
 }

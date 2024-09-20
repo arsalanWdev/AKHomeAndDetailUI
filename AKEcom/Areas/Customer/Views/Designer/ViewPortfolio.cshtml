@@ -1,0 +1,24 @@
+﻿@model IEnumerable<AK.Models.Portfolio>
+
+<h2>Portfolios</h2>
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var portfolio in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img src="@portfolio.ImageUrl" class="card-img-top" alt="@portfolio.Title">
+                    <div class="card-body">
+                        <h5 class="card-title">@portfolio.Title</h5>
+                        <p class="card-text">@portfolio.Description</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No portfolios available for this designer.</p>
+}

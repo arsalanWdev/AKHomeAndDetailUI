@@ -9,6 +9,7 @@ using Stripe;
 using AK.DataAccess.DbInitializer;
 using Microsoft.Extensions.Options;
 using BulkyBook.DataAccess.DbInitializer;
+using AK.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,45 +18,48 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging();
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .EnableSensitiveDataLogging(); // Enables detailed logging of SQL queries
 });
+
+// Configure Stripe
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
-builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+// Configure Identity services with IdentityUser
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+// Configure application cookies
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = $"/Identity/Account/Login";
     options.LogoutPath = $"/Identity/Account/Logout";
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
-
 });
 
-
+// Configure Facebook Authentication
 builder.Services.AddAuthentication().AddFacebook(option =>
 {
     option.AppId = "815424026933393";
     option.AppSecret = "dfc3081bc8bde54f0f2959077f3b3438";
 });
 
-
+// Configure distributed memory cache and session
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-
     options.IdleTimeout = TimeSpan.FromMinutes(100);
-
-    options.Cookie.HttpOnly= true;
-
+    options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
-
 });
+
+// Register custom services
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 builder.Services.AddRazorPages();
-
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
@@ -63,26 +67,22 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app.UseHsts(); // Enforces HTTPS
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 
-
+// Configure Stripe
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 app.UseRouting();
-
-SeedDatabase();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
-
 app.UseSession();
+
+// Seed the database
+SeedDatabase();
 
 app.MapControllerRoute(
     name: "default",
@@ -96,10 +96,7 @@ void SeedDatabase()
 {
     using (var scope = app.Services.CreateScope())
     {
-
         var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-
-        dbInitializer.Initialize();
-
+        dbInitializer.Initialize(); // Initialize the database with roles and default users
     }
 }

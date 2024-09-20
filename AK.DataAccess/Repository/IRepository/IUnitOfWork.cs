@@ -16,8 +16,8 @@ namespace AK.DataAccess.Repository.IRepository
         IOrderDetailRepository OrderDetail { get; }
         IOrderHeaderRepository OrderHeader { get; }
         IPortfolioRepository Portfolio { get; }
-
-
+        IGalleryRepository Gallery { get; }
+        IFavouriteRepository Favourite { get; }
         void ClearChangeTracker();
         void Save();
     }

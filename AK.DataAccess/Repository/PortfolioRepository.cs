@@ -25,5 +25,12 @@ namespace AK.DataAccess.Repository
             _db.Portfolios.Update(obj);
         }
 
+        // Method to get portfolios by UserId
+        public IEnumerable<Portfolio> GetPortfolioByDesignerId(string userId)
+        {
+            return _db.Portfolios
+                      .Where(p => p.UserId == userId)
+                      .ToList();
+        }
     }
 }

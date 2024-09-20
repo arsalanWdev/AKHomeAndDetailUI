@@ -17,6 +17,7 @@ namespace BulkyBook.DataAccess.DbInitializer
 
         public DbInitializer(
             UserManager<IdentityUser> userManager,
+
             RoleManager<IdentityRole> roleManager,
             ApplicationDbContext db)
         {
@@ -44,6 +45,7 @@ namespace BulkyBook.DataAccess.DbInitializer
             if (!_roleManager.RoleExistsAsync(SD.Role_Admin).GetAwaiter().GetResult())
             {
                 // Create roles
+
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_InteriorDesigner)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer)).GetAwaiter().GetResult();

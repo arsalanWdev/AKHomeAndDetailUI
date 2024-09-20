@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AK.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240917082326_initialmigrate")]
-    partial class initialmigrate
+    [Migration("20240920045852_updateddbsets")]
+    partial class updateddbsets
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,32 +50,91 @@ namespace AK.DataAccess.Migrations
                         {
                             Id = 1,
                             DisplayOrder = 1,
-                            Name = "Smartphones"
+                            Name = "Furniture"
                         },
                         new
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            Name = "Laptops"
+                            Name = "Lighting"
                         },
                         new
                         {
                             Id = 3,
                             DisplayOrder = 3,
-                            Name = "Wearables"
+                            Name = "Rugs"
                         },
                         new
                         {
                             Id = 4,
                             DisplayOrder = 4,
-                            Name = "Gaming"
+                            Name = "Curtains"
                         },
                         new
                         {
                             Id = 5,
                             DisplayOrder = 5,
-                            Name = "Audio"
+                            Name = "Wall Art"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DisplayOrder = 6,
+                            Name = "Decorative Accessories"
                         });
+                });
+
+            modelBuilder.Entity("AK.Models.Favourite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GalleryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GalleryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Favourites");
+                });
+
+            modelBuilder.Entity("AK.Models.Gallery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Gallerys");
                 });
 
             modelBuilder.Entity("AK.Models.OrderDetail", b =>
@@ -183,6 +242,37 @@ namespace AK.DataAccess.Migrations
                     b.ToTable("OrderHeaders");
                 });
 
+            modelBuilder.Entity("AK.Models.Portfolio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Portfolios");
+                });
+
             modelBuilder.Entity("AK.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -236,72 +326,86 @@ namespace AK.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Author = "Apple",
+                            Author = "HomeStyle",
                             CategoryId = 1,
-                            Description = "Latest iPhone model with advanced features.",
+                            Description = "Elegant and comfortable sofa set for your living room.",
                             ImageUrl = "",
-                            ListPrice = 999.0,
-                            Price = 950.0,
-                            Price100 = 900.0,
-                            Price50 = 925.0,
-                            SKU = "IP14PRO",
-                            Title = "iPhone 14 Pro"
+                            ListPrice = 799.0,
+                            Price = 750.0,
+                            Price100 = 700.0,
+                            Price50 = 725.0,
+                            SKU = "SOFA123",
+                            Title = "Sofa Set"
                         },
                         new
                         {
                             Id = 2,
-                            Author = "Apple",
+                            Author = "Lumiere",
                             CategoryId = 2,
-                            Description = "High-performance laptop for professionals.",
-                            ImageUrl = "",
-                            ListPrice = 2399.0,
-                            Price = 2300.0,
-                            Price100 = 2200.0,
-                            Price50 = 2250.0,
-                            SKU = "MBP16",
-                            Title = "MacBook Pro 16-inch"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Author = "Apple",
-                            CategoryId = 3,
-                            Description = "Smartwatch with health tracking features.",
+                            Description = "Crystal chandelier to add a touch of luxury to any room.",
                             ImageUrl = "",
                             ListPrice = 399.0,
                             Price = 375.0,
                             Price100 = 350.0,
                             Price50 = 365.0,
-                            SKU = "AW8",
-                            Title = "Apple Watch Series 8"
+                            SKU = "CHAN456",
+                            Title = "Chandelier"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Author = "Oriental Rugs",
+                            CategoryId = 3,
+                            Description = "Handcrafted Persian rug with intricate designs.",
+                            ImageUrl = "",
+                            ListPrice = 499.0,
+                            Price = 475.0,
+                            Price100 = 450.0,
+                            Price50 = 460.0,
+                            SKU = "RUG789",
+                            Title = "Persian Rug"
                         },
                         new
                         {
                             Id = 4,
-                            Author = "Sony",
+                            Author = "Elegance",
                             CategoryId = 4,
-                            Description = "Next-gen gaming console with 4K capabilities.",
+                            Description = "Luxurious silk curtains to enhance the beauty of your windows.",
                             ImageUrl = "",
-                            ListPrice = 499.0,
-                            Price = 480.0,
-                            Price100 = 450.0,
-                            Price50 = 470.0,
-                            SKU = "PS5",
-                            Title = "PlayStation 5"
+                            ListPrice = 129.0,
+                            Price = 120.0,
+                            Price100 = 110.0,
+                            Price50 = 115.0,
+                            SKU = "CURT101",
+                            Title = "Silk Curtains"
                         },
                         new
                         {
                             Id = 5,
-                            Author = "Bose",
+                            Author = "ArtHouse",
                             CategoryId = 5,
-                            Description = "Noise-cancelling wireless headphones.",
+                            Description = "Abstract modern art canvas to brighten up your walls.",
                             ImageUrl = "",
-                            ListPrice = 299.0,
-                            Price = 275.0,
-                            Price100 = 250.0,
-                            Price50 = 265.0,
-                            SKU = "BOSEQC35II",
-                            Title = "Bose QuietComfort 35 II"
+                            ListPrice = 199.0,
+                            Price = 180.0,
+                            Price100 = 160.0,
+                            Price50 = 170.0,
+                            SKU = "ART202",
+                            Title = "Modern Art Canvas"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Author = "DecorElite",
+                            CategoryId = 6,
+                            Description = "Set of decorative vases for stylish arrangements.",
+                            ImageUrl = "",
+                            ListPrice = 89.0,
+                            Price = 85.0,
+                            Price100 = 75.0,
+                            Price50 = 80.0,
+                            SKU = "VASE303",
+                            Title = "Decorative Vases"
                         });
                 });
 
@@ -566,6 +670,25 @@ namespace AK.DataAccess.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
+            modelBuilder.Entity("AK.Models.Favourite", b =>
+                {
+                    b.HasOne("AK.Models.Gallery", "Gallery")
+                        .WithMany()
+                        .HasForeignKey("GalleryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AK.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gallery");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("AK.Models.OrderDetail", b =>
                 {
                     b.HasOne("AK.Models.OrderHeader", "OrderHeader")
@@ -594,6 +717,17 @@ namespace AK.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("AK.Models.Portfolio", b =>
+                {
+                    b.HasOne("AK.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AK.Models.Product", b =>

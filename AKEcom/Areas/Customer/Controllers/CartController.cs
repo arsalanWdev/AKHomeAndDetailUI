@@ -166,16 +166,23 @@ namespace AKEcom.Areas.Customer.Controllers
                     _unitofwork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
                     _unitofwork.Save();
                 }
+
+                // Clear the session cart data
                 HttpContext.Session.Clear();
             }
 
+            // Remove the shopping cart items
             List<ShoppingCart> shoppingCarts = _unitofwork.ShoppingCart.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
-
             _unitofwork.ShoppingCart.RemoveRange(shoppingCarts);
             _unitofwork.Save();
 
-            return View(id);
+            // Set TempData for toastr notification
+            TempData["success"] = "Order placed successfully";
+
+            // Redirect to Home/Index after successful payment
+            return RedirectToAction("Index", "Home", new { area = "Customer" });
         }
+
 
         public IActionResult Plus(int cartId)
         {

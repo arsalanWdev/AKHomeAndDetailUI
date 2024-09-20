@@ -1,0 +1,24 @@
+﻿@model IEnumerable<AK.Models.ApplicationUser>
+
+<h2>Interior Designers</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var designer in Model)
+        {
+            <tr>
+                <td>@designer.Name</td>
+                <td>@designer.Email</td>
+                <td>
+                    <a href="@Url.Action("ViewPortfolio", "Designer", new { designerId = designer.Id })" class="btn btn-primary">View Portfolio</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

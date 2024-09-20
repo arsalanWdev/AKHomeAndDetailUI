@@ -8,11 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AK.DataAccess.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:AK.DataAccess/Migrations/20240918151918_InitialMigrate.cs
     public partial class InitialMigrate : Migration
-========
-    public partial class intitial : Migration
->>>>>>>> fb891e3229d09b796068bb516faa9b6191825c68:AK.DataAccess/Migrations/20240918112609_intitial.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -242,6 +238,28 @@ namespace AK.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Gallerys",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Gallerys", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Gallerys_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -329,11 +347,12 @@ namespace AK.DataAccess.Migrations
                 columns: new[] { "Id", "DisplayOrder", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, "Smartphones" },
-                    { 2, 2, "Laptops" },
-                    { 3, 3, "Wearables" },
-                    { 4, 4, "Gaming" },
-                    { 5, 5, "Audio" }
+                    { 1, 1, "Furniture" },
+                    { 2, 2, "Lighting" },
+                    { 3, 3, "Rugs" },
+                    { 4, 4, "Curtains" },
+                    { 5, 5, "Wall Art" },
+                    { 6, 6, "Decorative Accessories" }
                 });
 
             migrationBuilder.InsertData(
@@ -341,11 +360,12 @@ namespace AK.DataAccess.Migrations
                 columns: new[] { "Id", "Author", "CategoryId", "Description", "ImageUrl", "ListPrice", "Price", "Price100", "Price50", "SKU", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Apple", 1, "Latest iPhone model with advanced features.", "", 999.0, 950.0, 900.0, 925.0, "IP14PRO", "iPhone 14 Pro" },
-                    { 2, "Apple", 2, "High-performance laptop for professionals.", "", 2399.0, 2300.0, 2200.0, 2250.0, "MBP16", "MacBook Pro 16-inch" },
-                    { 3, "Apple", 3, "Smartwatch with health tracking features.", "", 399.0, 375.0, 350.0, 365.0, "AW8", "Apple Watch Series 8" },
-                    { 4, "Sony", 4, "Next-gen gaming console with 4K capabilities.", "", 499.0, 480.0, 450.0, 470.0, "PS5", "PlayStation 5" },
-                    { 5, "Bose", 5, "Noise-cancelling wireless headphones.", "", 299.0, 275.0, 250.0, 265.0, "BOSEQC35II", "Bose QuietComfort 35 II" }
+                    { 1, "HomeStyle", 1, "Elegant and comfortable sofa set for your living room.", "", 799.0, 750.0, 700.0, 725.0, "SOFA123", "Sofa Set" },
+                    { 2, "Lumiere", 2, "Crystal chandelier to add a touch of luxury to any room.", "", 399.0, 375.0, 350.0, 365.0, "CHAN456", "Chandelier" },
+                    { 3, "Oriental Rugs", 3, "Handcrafted Persian rug with intricate designs.", "", 499.0, 475.0, 450.0, 460.0, "RUG789", "Persian Rug" },
+                    { 4, "Elegance", 4, "Luxurious silk curtains to enhance the beauty of your windows.", "", 129.0, 120.0, 110.0, 115.0, "CURT101", "Silk Curtains" },
+                    { 5, "ArtHouse", 5, "Abstract modern art canvas to brighten up your walls.", "", 199.0, 180.0, 160.0, 170.0, "ART202", "Modern Art Canvas" },
+                    { 6, "DecorElite", 6, "Set of decorative vases for stylish arrangements.", "", 89.0, 85.0, 75.0, 80.0, "VASE303", "Decorative Vases" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -386,6 +406,11 @@ namespace AK.DataAccess.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Gallerys_CategoryId",
+                table: "Gallerys",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderHeaderId",
@@ -440,6 +465,9 @@ namespace AK.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Gallerys");
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");

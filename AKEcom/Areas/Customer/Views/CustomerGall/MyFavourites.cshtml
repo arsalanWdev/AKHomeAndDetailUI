@@ -1,0 +1,31 @@
+﻿@model IEnumerable<AK.Models.Favourite>
+
+<h2 class="text-center my-4">My Favourites</h2>
+<div class="container">
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            You have no favorites yet.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var favourite in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="@favourite.Gallery.ImageUrl" alt="@favourite.Gallery.Title" class="card-img-top img-fluid" style="max-height: 300px; object-fit: cover;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@favourite.Gallery.Title</h5>
+                            <form asp-action="RemoveFromFavourites" method="post">
+                                <input type="hidden" name="galleryId" value="@favourite.GalleryId" />
+                                <button type="submit" class="btn btn-danger">Remove from Favourites</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

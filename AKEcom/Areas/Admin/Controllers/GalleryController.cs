@@ -2,52 +2,52 @@
 using AK.Models;
 using AK.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
+
 namespace AKEcom.Areas.Customer.Controllers
 {
-    [Area("Customer")]
-    [Authorize(Roles = "InteriorDesigner")]
-    public class PortfolioController : Controller
+    [Area("Admin")]
+    [Authorize(Roles ="Admin")]
+    public class GalleryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly string _userId;
 
-        public PortfolioController(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        public GalleryController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         }
 
-        // GET: Portfolio
-        public IActionResult Index()
+        // GET: Gallery/Index
+        public IActionResult Index(string category = null)
         {
-            var portfolios = _unitOfWork.Portfolio.GetAll(p => p.UserId == _userId);
-            return View(portfolios);
+            var galleries = string.IsNullOrEmpty(category)
+                ? _unitOfWork.Gallery.GetAll()
+                : _unitOfWork.Gallery.GetAll(g => g.Category == category);
+
+            ViewBag.SelectedCategory = category;
+            return View(galleries);
         }
 
-        // GET: Portfolio/Create
+        // GET: Gallery/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Portfolio/Create
+        // POST: Gallery/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreatePortfolioViewModel model)
+        public async Task<IActionResult> Create(CreateGalleryViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var portfolio = new Portfolio
+                var gallery = new Gallery
                 {
                     Title = model.Title,
                     Description = model.Description,
-                    UserId = _userId // Set the user ID
+                    Category = model.Category
                 };
 
                 // Handle image file upload
@@ -60,50 +60,51 @@ namespace AKEcom.Areas.Customer.Controllers
                         await model.ImageFile.CopyToAsync(fileStream);
                     }
 
-                    portfolio.ImageUrl = "/images/" + model.ImageFile.FileName;
+                    gallery.ImageUrl = "/images/" + model.ImageFile.FileName;
                 }
 
-                _unitOfWork.Portfolio.Add(portfolio);
-                _unitOfWork.Save(); // Save changes using your Save method
+                _unitOfWork.Gallery.Add(gallery);
+                _unitOfWork.Save(); // Save changes
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        // GET: Portfolio/Edit/5
+        // GET: Gallery/Edit/5
         public IActionResult Edit(int id)
         {
-            var portfolio = _unitOfWork.Portfolio.Get(p => p.Id == id && p.UserId == _userId);
-            if (portfolio == null)
+            var gallery = _unitOfWork.Gallery.Get(g => g.Id == id);
+            if (gallery == null)
             {
                 return NotFound();
             }
 
-            var model = new CreatePortfolioViewModel
+            var model = new CreateGalleryViewModel
             {
-                Title = portfolio.Title,
-                Description = portfolio.Description,
-                // For existing image URL, you can include it in the ViewModel if needed
+                Title = gallery.Title,
+                Description = gallery.Description,
+                Category = gallery.Category
             };
 
             return View(model);
         }
 
-        // POST: Portfolio/Edit/5
+        // POST: Gallery/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CreatePortfolioViewModel model)
+        public async Task<IActionResult> Edit(int id, CreateGalleryViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var portfolio = _unitOfWork.Portfolio.Get(p => p.Id == id && p.UserId == _userId);
-                if (portfolio == null)
+                var gallery = _unitOfWork.Gallery.Get(g => g.Id == id);
+                if (gallery == null)
                 {
                     return NotFound();
                 }
 
-                portfolio.Title = model.Title;
-                portfolio.Description = model.Description;
+                gallery.Title = model.Title;
+                gallery.Description = model.Description;
+                gallery.Category = model.Category;
 
                 // Handle image file upload
                 if (model.ImageFile != null && model.ImageFile.Length > 0)
@@ -115,43 +116,42 @@ namespace AKEcom.Areas.Customer.Controllers
                         await model.ImageFile.CopyToAsync(fileStream);
                     }
 
-                    portfolio.ImageUrl = "/images/" + model.ImageFile.FileName;
+                    gallery.ImageUrl = "/images/" + model.ImageFile.FileName;
                 }
 
-                _unitOfWork.Portfolio.Update(portfolio);
-                _unitOfWork.Save(); // Save changes using your Save method
+                _unitOfWork.Gallery.Update(gallery);
+                _unitOfWork.Save(); // Save changes
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
         }
 
-        // GET: Portfolio/Delete/5
+        // GET: Gallery/Delete/5
         public IActionResult Delete(int id)
         {
-            var portfolio = _unitOfWork.Portfolio.Get(p => p.Id == id && p.UserId == _userId);
-            if (portfolio == null)
+            var gallery = _unitOfWork.Gallery.Get(g => g.Id == id);
+            if (gallery == null)
             {
                 return NotFound();
             }
 
-            return View(portfolio);
+            return View(gallery);
         }
-        [HttpPost, ActionName("DeleteConfirmed")]
+
+        // POST: Gallery/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var portfolio = _unitOfWork.Portfolio.Get(p => p.Id == id && p.UserId == _userId);
-            if (portfolio == null)
+            var gallery = _unitOfWork.Gallery.Get(g => g.Id == id);
+            if (gallery == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.Portfolio.Remove(portfolio);
-            _unitOfWork.Save(); // Call the synchronous Save method
+            _unitOfWork.Gallery.Remove(gallery);
+            _unitOfWork.Save(); // Save changes
             return RedirectToAction(nameof(Index));
         }
-
-
     }
-
 }
