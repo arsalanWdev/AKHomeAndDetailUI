@@ -65,6 +65,7 @@ namespace AKEcom.Areas.Customer.Controllers
 
                 _unitOfWork.Portfolio.Add(portfolio);
                 _unitOfWork.Save(); // Save changes using your Save method
+                TempData["success"] = "Portfolio Created Successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -120,6 +121,7 @@ namespace AKEcom.Areas.Customer.Controllers
 
                 _unitOfWork.Portfolio.Update(portfolio);
                 _unitOfWork.Save(); // Save changes using your Save method
+                TempData["success"] = "Portfolio Updated Successfully";
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
@@ -148,10 +150,8 @@ namespace AKEcom.Areas.Customer.Controllers
 
             _unitOfWork.Portfolio.Remove(portfolio);
             _unitOfWork.Save(); // Call the synchronous Save method
+            TempData["success"] = "Portfolio Deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
-
-
     }
-
 }

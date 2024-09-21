@@ -1,0 +1,29 @@
+﻿@model IEnumerable<AK.Models.Portfolio> // Ensure this matches your model namespace
+
+<h2 class="text-center mt-4 mb-4">@ViewData["DesignerName"]'s Portfolio</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-warning text-center" role="alert">
+        No portfolios found for this designer.
+    </div>
+}
+else
+{
+    <div class="portfolio-list container mt-4">
+        <div class="row">
+            @foreach (var portfolio in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <img src="@portfolio.ImageUrl" class="card-img-top" alt="@portfolio.Title" style="max-height: 200px; object-fit: cover;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@portfolio.Title</h5>
+                            <p class="card-text">@portfolio.Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

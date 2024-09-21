@@ -1,0 +1,54 @@
+﻿@model IEnumerable<AK.Models.ConsultationRequest>
+
+<h2>Your Consultation Requests</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning">@ViewBag.Message</div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Date Requested</th>
+                <th>Status</th>
+                @if (User.IsInRole(SD.Role_InteriorDesigner))
+                {
+                    <th>Actions</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.Name</td>
+                    <td>@request.Email</td>
+                    <td>@request.Message</td>
+                    <td>@request.DateRequested.ToString("g")</td>
+                    <td>@(request.IsApproved ? "Approved" : "Pending")</td>
+                    @if (User.IsInRole(SD.Role_InteriorDesigner))
+                    {
+                        <td>
+                            @if (!request.IsApproved)
+                            {
+                                <form asp-action="ApproveConsultation" method="post">
+                                    <input type="hidden" name="requestId" value="@request.Id" />
+                                    <button type="submit">Approve</button>
+                                </form>
+                                <form asp-action="RejectConsultation" method="post">
+                                    <input type="hidden" name="requestId" value="@request.Id" />
+                                    <button type="submit">Reject</button>
+                                </form>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}

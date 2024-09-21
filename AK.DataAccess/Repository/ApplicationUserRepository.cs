@@ -19,6 +19,7 @@ namespace AK.DataAccess.Repository
             _db = db;
         }
 
+
         public async Task<ApplicationUser> GetFirstOrDefaultAsync(Expression<Func<ApplicationUser, bool>> filter)
         {
             return await _db.ApplicationUsers.FirstOrDefaultAsync(filter);

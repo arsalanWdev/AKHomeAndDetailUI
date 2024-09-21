@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AK.Models.ApplicationUser> // Ensure this matches your model namespace
+
+<h2 class="text-center mt-4 mb-4">Our Designers</h2>
+
+@if (Model == null || !Model.Any())
+{
+        <div class="alert alert-warning text-center" role="alert">
+            No designers found.
+        </div>
+}
+else
+{
+        <div class="designer-list container mt-4">
+            <div class="row">
+            @foreach (var designer in Model)
+            {
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">@designer.Name</h5>
+                                    <a href="@Url.Action("Portfolio", "Designer", new { designerId = designer.Id })" class="btn btn-primary mt-3">
+                                        View Portfolio
+                                    </a>
+                                    <a href="@Url.Action("RequestConsultation", "Designer", new { designerId = designer.Id })" class="btn btn-success mt-2">
+                                        Request Consultation
+                                    </a>
+                            @if (User.IsInRole("InterioirDesigner"))
+                            {
+                                <a asp-area="Customer" asp-controller="Designer" asp-action="DesignerRequests" asp-route-designerId="@designer.Id">View Consultation Requests</a>
+
+                            }
+                        </div>
+                            </div>
+                        </div>
+            }
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <p class="text-muted">Total Designers: <strong>@Model.Count()</strong></p>
+        </div>
+}

@@ -10,6 +10,7 @@ using AK.DataAccess.DbInitializer;
 using Microsoft.Extensions.Options;
 using BulkyBook.DataAccess.DbInitializer;
 using AK.Models;
+using AK.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
            .EnableSensitiveDataLogging(); // Enables detailed logging of SQL queries
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+        });
+});
+
+builder.Services.AddSignalR();
 
 // Configure Stripe
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
@@ -81,14 +96,17 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 
+
+
 // Seed the database
 SeedDatabase();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
+
+app.MapHub<NotificationHub>("/api/SignalR");
 
 app.Run();
 

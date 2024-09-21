@@ -21,10 +21,16 @@ namespace AK.DataAccess.Data
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<Gallery> Gallerys { get; set; }
         public DbSet<Favourite> Favourites { get; set; }
+        public DbSet<BlogPost> BlogPosts { get; set; }
+        public DbSet<ConsultationRequest> ConsultationRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+
+            
+
             modelBuilder.Entity<Favourite>()
           .HasOne(f => f.Gallery)
           .WithMany()
@@ -34,7 +40,7 @@ namespace AK.DataAccess.Data
                 .HasOne(f => f.User)
                 .WithMany()
                 .HasForeignKey(f => f.UserId);
-
+             
 
             // Seeding Categories
             modelBuilder.Entity<Category>().HasData(

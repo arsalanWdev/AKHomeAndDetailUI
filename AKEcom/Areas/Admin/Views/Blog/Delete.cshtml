@@ -1,0 +1,24 @@
+﻿@model AK.Models.BlogPost
+@{
+    ViewData["Title"] = "Delete Blog Post";
+}
+
+<h1>Delete Blog Post</h1>
+
+<div>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>@Model.Title</h4>
+        <p>@Model.Content</p>
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <img src="@Model.ImagePath" alt="Blog Image" width="100" />
+        }
+    </div>
+</div>
+
+<form asp-action="DeleteConfirmed">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

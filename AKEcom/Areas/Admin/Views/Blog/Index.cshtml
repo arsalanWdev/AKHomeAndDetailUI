@@ -1,0 +1,37 @@
+﻿@model IEnumerable<AK.Models.BlogPost>
+@{
+    ViewData["Title"] = "Blog Index";
+}
+
+<h1>Blog Posts</h1>
+<a href="@Url.Action("Create")" class="btn btn-primary">Create New</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in Model)
+        {
+            <tr>
+                <td>@post.Title</td>
+                <td>@post.Content</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(post.ImagePath))
+                    {
+                        <img src="@post.ImagePath" alt="Blog Image" width="100" />
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = post.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", new { id = post.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

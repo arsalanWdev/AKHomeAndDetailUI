@@ -45,13 +45,22 @@
 
                         @if (User.IsInRole("Customer"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Customer" asp-controller="CustomerGall" asp-action="Index">Gallery</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("MyFavourites", "CustomerGall", new { area = "Customer" })">
-                                    Favourites (@ViewBag.FavouriteCount)
-                                </a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+User Area                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Customer" asp-controller="CustomerGall" asp-action="Index">Gallery</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="@Url.Action("MyFavourites", "CustomerGall", new { area = "Customer" })">
+                                            Favourites (@ViewBag.FavouriteCount)
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="Customer" asp-controller="Designer" asp-action="Designer">Interior Designers</a>
+                                    </li>
+                                </ul>
                             </li>
 
 
@@ -89,9 +98,14 @@
                                     <li class="nav-item">
                                         <a class="dropdown-item" asp-area="Admin" asp-controller="Gallery" asp-action="Index">Create Gallery</a>
                                     </li>
+
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Blog" asp-action="Index">Create Blog</a>
+                                    </li>
+                                     
+
                                 </ul>
                             </li>
-
                         }
 
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionCart) != null)
