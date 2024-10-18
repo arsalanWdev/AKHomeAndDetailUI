@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-
+    
 namespace BulkyBook.DataAccess.DbInitializer
 {
     public class DbInitializer : IDbInitializer
